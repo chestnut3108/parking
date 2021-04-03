@@ -2,7 +2,7 @@ import sys
 import argparse
 from os import path
 from models.ParkingLotRegistry import ParkingLotRegistry
-
+from models.ParkingLotRegistry import ParkingLot
 
 ap = argparse.ArgumentParser()
 
@@ -10,49 +10,55 @@ ap.add_argument("-f", "--filepath", required=True, help="filepath")
 
 cli_args = vars(ap.parse_args())
 
-parkingLot = None
+parkingLot: ParkingLot = None
 
-def createParkingLot(lot_capacity):
+
+def createParkingLot(lot_capacity: int):
     global parkingLot
-    parkingLotRegistry  =  ParkingLotRegistry()
-    parkingLot = parkingLotRegistry.getParkingLot(int(lot_capacity))
+    parking_lot_registry = ParkingLotRegistry()
+    if lot_capacity > 0:
+        parkingLot = parking_lot_registry.getParkingLot(lot_capacity)
+    else:
+        print("Wrong capacity :(")
 
 
-
-def execute_command(command):
+def execute_command(command: str):
     global parkingLot
     command = command.strip("\n")
     command = command.split(' ')
     print("command Started", command)
 
     if command[0] == 'Create_parking_lot':
-        createParkingLot(command[1])
+        createParkingLot(int(command[1]))
 
-    elif command[0] == 'Leave' and parkingLot is not None:
-        parkingLot.leave(command[1])
+    else:
+        if parkingLot is None:
+            print("Create a parking lot ;))")
 
-    elif command[0] == 'Park' and parkingLot is not None:
-        parkingLot.park(command[1], command[3])
+        elif command[0] == 'Leave':
+            parkingLot.leave(command[1])
 
-    elif command[0] == 'Slot_number_for_car_with_number' and parkingLot is not None:
-        print(parkingLot.slotNumberByRegistrationNumber(command[1]))
+        elif command[0] == 'Park':
+            parkingLot.park(command[1], command[3])
 
-    elif command[0] == 'Slot_numbers_for_driver_of_age' and parkingLot is not None:
-        result = parkingLot.getSlotNumbersForDriverOfAge(command[1])
-        if len(result) > 0:
-            print(', '.join(map(str, result)))
-        else:
-            print("No slot is booked by any user with age {}".format( command[1]))
+        elif command[0] == 'Slot_number_for_car_with_number':
+            print(parkingLot.getSlotNumberByRegistrationNumber(command[1]))
 
-    elif command[0] == 'Vehicle_registration_number_for_driver_of_age' and parkingLot is not None:
-        result = parkingLot.getVehicleRegistrationNumbersByDriverAge(command[1])
-        if len(result) > 0:
-            print(', '.join(map(str, result)))
-        else:
-            print("No slot is booked by any user with age {}".format( command[1]))
+        elif command[0] == 'Slot_numbers_for_driver_of_age':
+            result = parkingLot.getVehicleRegistrationNumbersByDriverAge(command[1])
+            if len(result) > 0:
+                print(', '.join(map(str, result)))
+            else:
+                print("No slot is booked by any user with age {}".format(command[1]))
+
+        elif command[0] == 'Vehicle_registration_number_for_driver_of_age':
+            result = parkingLot.getVehicleRegistrationNumbersByDriverAge(command[1])
+            if len(result) > 0:
+                print(', '.join(map(str, result)))
+            else:
+                print("No slot is booked by any user with age {}".format(command[1]))
 
     print("-----------------------------------------------------------")
-
 
 
 if __name__ == '__main__':

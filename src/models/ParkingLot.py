@@ -8,23 +8,23 @@ class ParkingLot:
         self.used_slot_count = 0
         self.slot_vehicle_dict = {}
 
-    def getEmptySlot(self):
+    def __getEmptySlot(self):
         if self.used_slot_count == self.capacity:
             return -1
         else:
-            first_unused_slot = self.unused_slots[0]
+            nearest_unused_slot = self.unused_slots[0]
             self.unused_slots = self.unused_slots[1:]
             self.used_slot_count += 1
-            return first_unused_slot
+            return nearest_unused_slot
 
-    def park(self, registration_number, driver_age):
-        slot = self.getEmptySlot()
+    def park(self, registration_number: str, driver_age:str) -> int:
+        slot = self.__getEmptySlot()
         if slot == -1:
             print("No empty slot please wait")
         else:
             self.slot_vehicle_dict[str(slot)] = Vehicle(registration_number, driver_age)
-            self.used_slot_count += 1
             print("Car with vehicle registration number {} has been parked at slot number {}".format(registration_number, slot))
+        return int(slot)
 
     def leave(self, slot_number):
         vehicle_left = self.slot_vehicle_dict.pop(slot_number, -1)
@@ -37,7 +37,7 @@ class ParkingLot:
             print("Slot number {} vacated, the car with vehicle registration number {} left the space, the driver of the car was of age {}"
                 .format(slot_number, vehicle_left.registration_number, vehicle_left.driver_age))
 
-    def slotNumberByRegistrationNumber(self, registration_number):
+    def getSlotNumberByRegistrationNumber(self, registration_number):
 
         for slot, vehicle in self.slot_vehicle_dict.items():
             if vehicle.registration_number == registration_number:
