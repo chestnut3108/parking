@@ -27,7 +27,6 @@ class ParkingLot:
             print("Car with vehicle registration number {} has been parked at slot number {}".format(registration_number, slot))
 
     def leave(self, slot_number):
-        print(slot_number)
         vehicle_left = self.slot_vehicle_dict.pop(slot_number, -1)
         if vehicle_left == -1:
             print("Slot already empty")
@@ -41,10 +40,10 @@ class ParkingLot:
     def slotNumberByRegistrationNumber(self, registration_number):
 
         for slot, vehicle in self.slot_vehicle_dict.items():
-            print(vehicle.registration_number, registration_number)
             if vehicle.registration_number == registration_number:
                 return slot
         return -1
+
     def getVehicleRegistrationNumbersByDriverAge(self, driver_age):
         result = []
         for slot in self.slot_vehicle_dict:
