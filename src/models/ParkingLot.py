@@ -17,27 +17,26 @@ class ParkingLot:
             self.used_slot_count += 1
             return first_unused_slot
 
-    def park(self, registration_no, driver_age):
+    def park(self, registration_number, driver_age):
         slot = self.getEmptySlot()
         if slot == -1:
             print("No empty slot please wait")
         else:
-            self.slot_vehicle_dict[str(slot)] = Vehicle(registration_no, driver_age)
+            self.slot_vehicle_dict[str(slot)] = Vehicle(registration_number, driver_age)
             self.used_slot_count += 1
-            print("Car with vehicle registration number {} has been parked at slot number {}".format(registration_no, slot))
+            print("Car with vehicle registration number {} has been parked at slot number {}".format(registration_number, slot))
 
     def leave(self, slot_number):
         print(slot_number)
-        freed_slot_number = self.slot_vehicle_dict.pop(slot_number, -1)
-        if freed_slot_number == -1:
+        vehicle_left = self.slot_vehicle_dict.pop(slot_number, -1)
+        if vehicle_left == -1:
             print("Slot already empty")
         else:
-            vehicle_left = self.slot_vehicle_dict[freed_slot_number]
-            self.unused_slots.append(slot_number)
+            self.unused_slots.append(int(slot_number))
             self.unused_slots.sort()
             self.used_slot_count -= 1
             print("Slot number {} vacated, the car with vehicle registration number {} left the space, the driver of the car was of age {}"
-                .format(freed_slot_number, vehicle_left.registration_no, vehicle_left.driver_age))
+                .format(slot_number, vehicle_left.registration_number, vehicle_left.driver_age))
 
     def slotNumberByRegistrationNumber(self, registration_number):
 
