@@ -1,6 +1,6 @@
 import unittest
-from src.models.ParkingLot import ParkingLot
-from src.models.Vehicle import Vehicle
+from src.lib.models.ParkingLot import ParkingLot
+from src.lib.models.Vehicle import Vehicle
 class ParkingLotTest(unittest.TestCase):
     capacity = 4
     VEHICLE_REGISTRATION_NUMBER_1 = 'XX-1234-0001'
@@ -77,30 +77,30 @@ class ParkingLotTest(unittest.TestCase):
 
     def testGetVehicleRegistrationNumbersByDriverAge(self):
         parking_lot = self.fullParkingSetUp(self.parking_lot)
-        vehicle_r_nos = parking_lot.getVehicleRegistrationNumbersByDriverAge(18)
+        vehicle_r_nos = parking_lot.get_vehicle_registration_numbers_by_driver_age(18)
         self.assertTrue(self.VEHICLE_REGISTRATION_NUMBER_1 in vehicle_r_nos)
         self.assertTrue(self.VEHICLE_REGISTRATION_NUMBER_3 in vehicle_r_nos)
         self.assertEqual(2, len(vehicle_r_nos))
 
         #Testing wrong age
-        vehicle_r_nos = parking_lot.getVehicleRegistrationNumbersByDriverAge(1000)
+        vehicle_r_nos = parking_lot.get_vehicle_registration_numbers_by_driver_age(1000)
         self.assertEqual(0, len(vehicle_r_nos))
 
     def testGetSlotNumbersForDriverOfAge(self):
         parking_lot = self.fullParkingSetUp(self.parking_lot)
-        slots = parking_lot.getSlotNumbersForDriverOfAge(18)
+        slots = parking_lot.get_slot_numbers_for_driver_of_age(18)
         self.assertEqual(2, len(slots))
 
         #Testing wrong age
-        slots = parking_lot.getSlotNumbersForDriverOfAge(1000)
+        slots = parking_lot.get_slot_numbers_for_driver_of_age(1000)
         self.assertEqual(0, len(slots))
 
     def testSlotNumberByRegistrationNumber(self):
         parking_lot = self.fullParkingSetUp(self.parking_lot)
-        slot1 = parking_lot.getSlotNumberByRegistrationNumber(self.VEHICLE_REGISTRATION_NUMBER_1)
-        slot2 = parking_lot.getSlotNumberByRegistrationNumber(self.VEHICLE_REGISTRATION_NUMBER_2)
-        slot3 = parking_lot.getSlotNumberByRegistrationNumber(self.VEHICLE_REGISTRATION_NUMBER_3)
-        slot4 = parking_lot.getSlotNumberByRegistrationNumber(self.VEHICLE_REGISTRATION_NUMBER_4)
+        slot1 = parking_lot.get_slot_number_by_registration_number(self.VEHICLE_REGISTRATION_NUMBER_1)
+        slot2 = parking_lot.get_slot_number_by_registration_number(self.VEHICLE_REGISTRATION_NUMBER_2)
+        slot3 = parking_lot.get_slot_number_by_registration_number(self.VEHICLE_REGISTRATION_NUMBER_3)
+        slot4 = parking_lot.get_slot_number_by_registration_number(self.VEHICLE_REGISTRATION_NUMBER_4)
 
         self.assertEqual(slot1, '1')
         self.assertEqual(slot2, '2')
@@ -108,7 +108,7 @@ class ParkingLotTest(unittest.TestCase):
         self.assertEqual(slot4, '4')
 
         # Test invalid Registration number vehicle
-        slot5 = parking_lot.getSlotNumberByRegistrationNumber(self.VEHICLE_REGISTRATION_NUMBER_5)
+        slot5 = parking_lot.get_slot_number_by_registration_number(self.VEHICLE_REGISTRATION_NUMBER_5)
         self.assertEqual(slot5, -1)
 
 

@@ -1,4 +1,3 @@
-import sys
 import argparse
 from os import path
 from models.ParkingLotRegistry import ParkingLotRegistry
@@ -19,13 +18,13 @@ def createParkingLot(lot_capacity: int):
     if lot_capacity > 0:
         parkingLot = parking_lot_registry.getParkingLot(lot_capacity)
     else:
-        print("Wrong capacity :(")
+        print("Invalid capacity :(")
 
 
-def execute_command(command: str):
-    global parkingLot
+def execute_command(command: str, parkingLot: ParkingLot):
     command = command.strip("\n")
     command = command.split(' ')
+    print("----------------------------------------------")
     print("command Started", command)
 
     if command[0] == 'Create_parking_lot':
@@ -33,7 +32,7 @@ def execute_command(command: str):
 
     else:
         if parkingLot is None:
-            print("Create a parking lot ;))")
+            print("Create a parking lot ;)")
 
         elif command[0] == 'Leave':
             parkingLot.leave(command[1])
@@ -42,24 +41,25 @@ def execute_command(command: str):
             parkingLot.park(command[1], command[3])
 
         elif command[0] == 'Slot_number_for_car_with_number':
-            print(parkingLot.getSlotNumberByRegistrationNumber(command[1]))
+            print(parkingLot.get_slot_number_by_registration_number(command[1]))
 
         elif command[0] == 'Slot_numbers_for_driver_of_age':
-            result = parkingLot.getVehicleRegistrationNumbersByDriverAge(command[1])
+            result = parkingLot.get_vehicle_registration_numbers_by_driver_age(command[1])
             if len(result) > 0:
                 print(', '.join(map(str, result)))
             else:
                 print("No slot is booked by any user with age {}".format(command[1]))
 
         elif command[0] == 'Vehicle_registration_number_for_driver_of_age':
-            result = parkingLot.getVehicleRegistrationNumbersByDriverAge(command[1])
+            result = parkingLot.get_vehicle_registration_numbers_by_driver_age(command[1])
             if len(result) > 0:
                 print(', '.join(map(str, result)))
             else:
                 print("No slot is booked by any user with age {}".format(command[1]))
 
-    print("-----------------------------------------------------------")
-
+        else:
+            print("Please enter a valid command")
+        print("-----------------------------------------------------")
 
 if __name__ == '__main__':
 
@@ -67,6 +67,6 @@ if __name__ == '__main__':
         file = open(cli_args['filepath'], "r")
         lines = file.readlines()
         for command in lines:
-            execute_command(command)
+            execute_command(command, parkingLot)
     else:
         print("please enter valid path")
