@@ -1,6 +1,6 @@
 import unittest
-from src.lib.models.ParkingLot import ParkingLot
-from src.lib.models.Vehicle import Vehicle
+from src.models.ParkingLot import ParkingLot
+from src.models.Vehicle import Vehicle
 class ParkingLotTest(unittest.TestCase):
     capacity = 4
     VEHICLE_REGISTRATION_NUMBER_1 = 'XX-1234-0001'

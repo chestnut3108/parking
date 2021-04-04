@@ -1,6 +1,5 @@
 import unittest
-from src.lib.models.ParkingLotRegistry import ParkingLotRegistry
-from src.lib.models.Vehicle import Vehicle
+from src.models.ParkingLotRegistry import ParkingLotRegistry
 
 
 class ParkingLotRegistryTest(unittest.TestCase):
