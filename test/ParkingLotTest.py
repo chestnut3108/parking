@@ -25,11 +25,11 @@ class ParkingLotTest(unittest.TestCase):
 
     def testFullParkOverFlow(self):
         parking_lot = self.fullParkingSetUp(self.parking_lot)
-        self.assertEqual(self.capacity, parking_lot.used_slot_count)
+        self.assertEqual(self.capacity, parking_lot.used_slots_count)
         vehicle5 = Vehicle(self.VEHICLE_REGISTRATION_NUMBER_5, 21)
         newVehicleSlot = parking_lot.park(vehicle5.registration_number, vehicle5.driver_age)
         self.assertEqual(-1, newVehicleSlot )
-        self.assertEqual(self.capacity, parking_lot.used_slot_count)
+        self.assertEqual(self.capacity, parking_lot.used_slots_count)
 
     def testParking(self):
         vehicle1 = Vehicle(self.VEHICLE_REGISTRATION_NUMBER_1, 18)
@@ -39,13 +39,13 @@ class ParkingLotTest(unittest.TestCase):
         self.parking_lot.park(vehicle2.registration_number, vehicle2.driver_age)
         self.parking_lot.park(vehicle3.registration_number, vehicle3.driver_age)
 
-        self.assertEqual(self.parking_lot.used_slot_count, 3)
+        self.assertEqual(self.parking_lot.used_slots_count, 3)
         self.assertEqual(len(self.parking_lot.unused_slots), 1)
 
         vehicle4 = Vehicle(self.VEHICLE_REGISTRATION_NUMBER_4, 21)
         self.parking_lot.park(vehicle4.registration_number, vehicle4.driver_age)
 
-        self.assertEqual(self.parking_lot.used_slot_count, 4)
+        self.assertEqual(self.parking_lot.used_slots_count, 4)
         self.assertEqual(len(self.parking_lot.unused_slots), 0)
 
     def testLeaveParkingLot(self):
@@ -54,7 +54,7 @@ class ParkingLotTest(unittest.TestCase):
         self.parking_lot.park(vehicle1.registration_number, vehicle1.driver_age)
         self.parking_lot.park(vehicle2.registration_number, vehicle2.driver_age)
 
-        self.assertEqual(self.parking_lot.used_slot_count, 2)
+        self.assertEqual(self.parking_lot.used_slots_count, 2)
         self.assertEqual(len(self.parking_lot.unused_slots), 2)
         self.assertTrue('1' in self.parking_lot.slot_vehicle_dict)
         self.assertTrue('2' in self.parking_lot.slot_vehicle_dict)
@@ -62,17 +62,17 @@ class ParkingLotTest(unittest.TestCase):
 
         self.parking_lot.leave('2')
         self.assertFalse('2' in self.parking_lot.slot_vehicle_dict)
-        self.assertEqual(self.parking_lot.used_slot_count, 1)
+        self.assertEqual(self.parking_lot.used_slots_count, 1)
         self.assertEqual(len(self.parking_lot.unused_slots), 3)
 
         # Leave wrong slot
         self.parking_lot.leave('10')
-        self.assertEqual(self.parking_lot.used_slot_count, 1)
+        self.assertEqual(self.parking_lot.used_slots_count, 1)
         self.assertEqual(len(self.parking_lot.unused_slots), 3)
 
         # Leave already empty slot
         self.parking_lot.leave('3')
-        self.assertEqual(self.parking_lot.used_slot_count, 1)
+        self.assertEqual(self.parking_lot.used_slots_count, 1)
         self.assertEqual(len(self.parking_lot.unused_slots), 3)
 
     def testGetVehicleRegistrationNumbersByDriverAge(self):

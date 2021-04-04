@@ -4,9 +4,7 @@ from models.ParkingLotRegistry import ParkingLotRegistry
 from models.ParkingLotRegistry import ParkingLot
 
 ap = argparse.ArgumentParser()
-
 ap.add_argument("-f", "--filepath", required=True, help="filepath")
-
 cli_args = vars(ap.parse_args())
 
 parkingLot: ParkingLot = None
@@ -24,8 +22,6 @@ def createParkingLot(lot_capacity: int):
 def execute_command(command: str, parkingLot: ParkingLot):
     command = command.strip("\n")
     command = command.split(' ')
-    print("----------------------------------------------")
-    print("command Started", command)
 
     if command[0] == 'Create_parking_lot':
         createParkingLot(int(command[1]))
@@ -59,7 +55,7 @@ def execute_command(command: str, parkingLot: ParkingLot):
 
         else:
             print("Please enter a valid command")
-        print("-----------------------------------------------------")
+
 
 if __name__ == '__main__':
 
