@@ -13,7 +13,8 @@ Clone the repository
 Run the command  
 `python src/main.py -f <FILE_PATH>` 
 
-Sample usage ubuntu:- `python src/main.py -f ~/projects/assignment/parking/untitled.txt`
+Sample usage ubuntu:-   
+`python src/main.py -f ~/projects/assignment/parking/testfile.txt`
 
 Run tests 
 `python -m pytest test/*`
